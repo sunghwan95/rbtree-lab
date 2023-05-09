@@ -1,10 +1,16 @@
 #include "rbtree.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 
 rbtree *new_rbtree(void) {
   rbtree *p = (rbtree *)calloc(1, sizeof(rbtree));
-  // TODO: initialize struct if needed
+  node_t *nil=(node_t *)calloc(1, sizeof(node_t));
+
+  p->root = nil;
+  p->nil = nil;
+  nil->color = RBTREE_BLACK;
+
   return p;
 }
 
