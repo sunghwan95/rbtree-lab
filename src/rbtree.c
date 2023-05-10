@@ -305,18 +305,16 @@ int rbtree_erase(rbtree *t, node_t *p) {
   return 0;
 }
 
-void inordered_arr(node_t *root, node_t *nil, key_t *arr, int *index){
-  if(root == nil){
-    return;
-  }
-  inordered_arr(root->left, nil, arr, index);
-  arr[(*index)++] = root->key;
-  inordered_arr(root->right, nil, arr, index);
+int rb_inorder(node_t *root, key_t *res, const rbtree *t, int i){
+  if (root == t->nil) return i;
+
+  i = rb_inorder(root->left, res, t, i);
+  res[i] = root->key;
+  i = rb_inorder(root->right, res, t, i + 1);
 }
 
-int rbtree_to_array(const rbtree *t, key_t *arr, const size_t n) {
-  int *index = calloc(1,sizeof(int));
-  inordered_arr(t->root, t->nil, arr, index);
-  free(index);
+// rbtree를 key값 순으로 변경하는 함수
+int rbtree_to_array(const rbtree *t, key_t *arr, const size_t n){
+  rb_inorder(t->root, arr, t, 0);
   return 0;
 }
